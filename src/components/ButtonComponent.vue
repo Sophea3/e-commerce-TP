@@ -1,5 +1,5 @@
 <template>
-  <button class="shop-button">{{ text }}</button>
+  <button class="shop-button" @click="shopNow">{{ text }}</button>
 </template>
 
 <script>
@@ -7,6 +7,12 @@ export default {
   name: 'ButtonComponent',
   props: {
     text: String,
+    promotion: Object, // Accept promotion data as a prop
+  },
+  methods: {
+    shopNow() {
+      alert("Let's shop: " + this.promotion.title)
+    },
   },
 }
 </script>

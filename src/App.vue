@@ -23,8 +23,10 @@
         :subtitle="promo.subtitle"
         :image="promo.image"
         :bgColor="promo.bgColor"
+        :text="'Shop Now'"
+        :promotion="promo"
       >
-        <ButtonComponent text="Shop Now" />
+        <ButtonComponent text="Shop Now" :promotion="promo" />
       </PromotionComponent>
     </div>
   </div>
