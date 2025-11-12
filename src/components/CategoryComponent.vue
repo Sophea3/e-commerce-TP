@@ -1,48 +1,33 @@
 <template>
-  <div class="category-card" :style="{ backgroundColor: bgColor }">
-    <img :src="image" alt="category image" />
+  <div class="category" :style="{ backgroundColor: color }">
+    <img :src="image" alt="Category images" />
     <h3>{{ title }}</h3>
-    <p>{{ items }} items</p>
+    <p>{{ subtitle }}</p>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'CategoryComponent',
-  props: {
-    title: String,
-    items: Number,
-    image: String,
-    bgColor: {
-      type: String,
-      default: '#ffffff',
-    },
-  },
-}
+<script setup>
+defineProps({
+  title: String,
+  subtitle: String,
+  image: String,
+  color: String
+});
 </script>
 
 <style scoped>
-.category-card {
-  width: 140px;
+.category {
   padding: 12px;
   border-radius: 12px;
-  background-color: #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  color: #253D4E;
   text-align: center;
-  font-family: 'Inter', sans-serif;
+  width: 100px;
 }
-.category-card img {
+.category img {
   width: 100%;
-  height: auto;
+  height: 70px;
+  object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 8px;
-}
-.category-card h3 {
-  font-size: 14px;
-  margin: 4px 0;
-}
-.category-card p {
-  font-size: 12px;
-  color: #777;
+  margin-bottom: 0px;
 }
 </style>

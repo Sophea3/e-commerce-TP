@@ -1,106 +1,120 @@
 <template>
-  <div class="app-container">
-    <h1>This is my first VueJs project</h1>
-
-    <!-- Categories -->
-    <div class="category-grid">
-      <CategoryComponent
+  <div id="app">
+    <!-- Category Section -->
+    <section class="categories">
+      <Category
         v-for="(cat, index) in categories"
         :key="index"
-        :title="cat.title"
-        :items="cat.items"
-        :image="cat.image"
-        :bgColor="cat.bgColor"
+        :title="cat.name"
+        :subtitle="`${cat.productCount} items`"
+        :image="getImageUrl(cat.image)"
+        :color="cat.color"
       />
-    </div>
+    </section>
 
-    <!-- Promotions -->
-    <div class="promo-grid">
-      <PromotionComponent
+    <!-- Promotion Section -->
+    <section class="promotions">
+      <Promotion
         v-for="(promo, index) in promotions"
         :key="index"
         :title="promo.title"
-        :subtitle="promo.subtitle"
-        :image="promo.image"
-        :bgColor="promo.bgColor"
-        :text="'Shop Now'"
-        :promotion="promo"
-      >
-        <ButtonComponent text="Shop Now" :promotion="promo" />
-      </PromotionComponent>
-    </div>
+        :image="getImageUrl(promo.image)"
+        :bgColor="promo.color"
+        :buttonText="promo.buttonText"
+        :buttonColor="promo.buttonColor"
+      />
+    </section>
   </div>
 </template>
 
-<script>
-import CategoryComponent from './components/CategoryComponent.vue'
-import PromotionComponent from './components/PromotionComponent.vue'
-import ButtonComponent from './components/ButtonComponent.vue'
+<script setup lang="ts">
+import Category from './components/CategoryComponent.vue'
+import axios from 'axios'
+import { ref, onMounted, defineAsyncComponent } from 'vue'
+const Promotion = defineAsyncComponent(() => import('./components/PromotionComponent.vue'))
 
-export default {
-  name: 'App',
-  components: {
-    CategoryComponent,
-    PromotionComponent,
-    ButtonComponent,
-  },
-  data() {
-    return {
-      categories: [
-        { title: 'Cake & Milk', items: 14, image: '/Image/burger.jpg', bgColor: '#F2FCE4' },
-        { title: 'Peach', items: 12, image: '/Image/peach.jpg', bgColor: '#FFFCEB' },
-        { title: 'Organic Kiwi', items: 21, image: '/Image/kiwi.jpg', bgColor: '#ECFFEC' },
-        { title: 'Red Apple', items: 68, image: '/Image/apple.jpg', bgColor: '#FEEFEA' },
-        { title: 'Snack', items: 34, image: '/Image/snack.jpg', bgColor: '#FFF3EB' },
-        { title: 'Black Plum', items: 25, image: '/Image/plum.jpg', bgColor: '#FFF3FF' },
-        { title: 'Vegetables', items: 65, image: '/Image/vegetables.jpg', bgColor: '#F2FCE4' },
-        { title: 'Headphone', items: 33, image: '/Image/headphone.jpg', bgColor: '#FFFCEB' },
-        { title: 'Cake & Milk', items: 54, image: '/Image/cake.jpg', bgColor: '#F2FCE4' },
-        { title: 'Orange', items: 63, image: '/Image/orange.jpg', bgColor: '#FFF3FF' },
-      ],
-      promotions: [
-        {
-          title: 'Everyday Fresh & Clean with Our Products',
-          subtitle: 'Thise MEJERI',
-          image: '/Image/smoothie.jpg',
-          bgColor: '#ffe0e0',
-        },
-        {
-          title: 'Make your Breakfast Healthy and Easy',
-          subtitle: 'Strawberry Juice',
-          image: '/Image/strawberry.jpg',
-          bgColor: '#e0f7fa',
-        },
-        {
-          title: 'The best Organic Products Online',
-          subtitle: 'Fresh vegetables and fruits',
-          image: '/Image/organic.jpg',
-          bgColor: '#e8f5e9',
-        },
-      ],
-    }
-  },
+// Define types
+interface Category {
+  id?: number
+  name: string
+  url: string
+  productCount: number
+  color: string
+  image: string
 }
+
+interface Promotion {
+  id: number
+  title: string
+  color: string
+  image: string
+  url: string
+  buttonText: string
+  buttonColor: string
+}
+
+// Reactive variables
+const categories = ref<Category[]>([])
+const promotions = ref<Promotion[]>([])
+
+const API_BASE_URL = 'http://localhost:3000'
+
+const getImageUrl = (imagePath: string | undefined) => {
+  if (!imagePath) {
+    return 'https://via.placeholder.com/300x200?text=No+Image'
+  }
+  if (imagePath.startsWith('http')) {
+    return imagePath
+  }
+  return `${API_BASE_URL}${imagePath.startsWith('/') ? '' : '/'}${imagePath}`
+}
+
+const fetchProducts = async () => {
+  try {
+    const response = await axios.get<Category[]>('http://localhost:3000/api/categories')
+    console.log('Categories API Response:', response.data)
+    categories.value = response.data
+  } catch (error) {
+    console.error('Error fetching products:', error)
+  }
+}
+
+const fetchPromotions = async () => {
+  try {
+    const response = await axios.get<Promotion[]>('http://localhost:3000/api/promotions')
+    console.log('Promotions API Response:', response.data)
+    promotions.value = response.data
+  } catch (error) {
+    console.error('Error fetching promotions:', error)
+  }
+}
+
+onMounted(() => {
+  fetchProducts()
+  fetchPromotions()
+})
 </script>
 
-<style>
-.app-container {
-  max-width: 1200px;
-  margin: auto;
+<style scoped>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
   padding: 20px;
-  font-family: 'Inter', sans-serif;
 }
-.category-grid {
+.categories {
   display: flex;
-  gap: 16px;
-  justify-content: center;
+  flex-wrap: wrap;
+  gap: 15px;
   margin-bottom: 40px;
-  flex-direction: row;
+  justify-content: center;
+  height: auto;
 }
-.promo-grid {
+.promotions {
   display: flex;
   flex-direction: row;
-  gap: 24px;
-  justify-content: center;
+  gap: 5px;
+}
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>

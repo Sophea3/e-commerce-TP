@@ -1,58 +1,78 @@
 <template>
-  <div class="promo-box" :style="{ backgroundColor: bgColor }">
-    <div class="promo-text">
+  <div class="promo" :style="{ backgroundColor: bgColor }">
+    <div class="content">
       <h2>{{ title }}</h2>
-      <p>{{ subtitle }}</p>
-      <slot></slot>
+      <ButtonComponent 
+        :text="buttonText" 
+        :color="buttonColor" 
+        @click="showMessage"
+      />
     </div>
-    <img :src="image" alt="promo image" />
+    <div class="image-container">
+      <img :src="image" alt="Promotion image" />
+    </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'PromotionComponent',
-  props: {
-    title: String,
-    subtitle: String,
-    image: String,
-    bgColor: {
-      type: String,
-      default: '#f9f9f9',
-    },
-  },
+<script setup>
+import ButtonComponent from './ButtonComponent.vue'
+
+const props = defineProps({
+  title: String,
+  description: String,
+  image: String,
+  bgColor: String,
+  buttonText: String,
+  buttonColor: String
+});
+
+function showMessage() {
+  alert("Let's shop: " + props.title);
 }
 </script>
 
 <style scoped>
-.promo-box {
+.promo {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 20px;
-  padding: 24px;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 30px;
   border-radius: 16px;
-  margin-bottom: 20px;
-  font-family: 'Inter', sans-serif;
+  color: #253D4E;
+  gap: 20px;
+  width: 600px;
+  height: 250px;
+  overflow: hidden;
 }
 
-.promo-text {
+.content {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.promo-text h2 {
+.content h2 {
+  margin: 0 0 20px;
   font-size: 20px;
-  margin-bottom: 8px;
+  font-weight: 700;
+  line-height: 1.4;
 }
 
-.promo-text p {
-  font-size: 14px;
-  color: #555;
+.image-container {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  overflow: hidden;
 }
 
-.promo-box img {
-  width: 120px;
-  height: auto;
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* makes the image fill the space fully */
   border-radius: 12px;
 }
 </style>
