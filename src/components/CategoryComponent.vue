@@ -6,13 +6,34 @@
   </div>
 </template>
 
-<script setup>
-defineProps({
-  title: String,
-  subtitle: String,
-  image: String,
-  color: String
-});
+<script lang="ts">
+// defineProps({
+//   title: String,
+//   subtitle: String,
+//   image: String,
+//   color: String
+// });
+export default {
+  name: 'CategoryComponent',
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    subtitle: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String,
+      required: true
+    },
+    color: {
+      type: String,
+      required: true
+    }
+  }
+}
 </script>
 
 <style scoped>

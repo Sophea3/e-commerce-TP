@@ -6,16 +6,20 @@
   </button>
 </template>
 
-<script setup>
-const props = defineProps({
-  text: { type: String, default: 'Shop Now' },
-  color: { type: String, default: '#3b82f6' }
-})
-const emit = defineEmits(['click']);
+<script lang="ts">
+// const props = defineProps({
+//   text: { type: String, default: 'Shop Now' },
+//   color: { type: String, default: '#3b82f6' }
+// })
+export default {
+  name: 'ButtonComponent',
 
-function handleClick() {
-  emit('click');
-}
+};
+// const emit = defineEmits(['click']);
+
+// function handleClick() {
+//   emit('click');
+// }
 </script>
 
 <style scoped>

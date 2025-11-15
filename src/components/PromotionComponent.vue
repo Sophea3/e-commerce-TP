@@ -14,21 +14,33 @@
   </div>
 </template>
 
-<script setup>
-import ButtonComponent from './ButtonComponent.vue'
-
-const props = defineProps({
-  title: String,
-  description: String,
-  image: String,
-  bgColor: String,
-  buttonText: String,
-  buttonColor: String
-});
-
-function showMessage() {
-  alert("Let's shop: " + props.title);
+<script lang="ts">
+export default {
+  name: 'PromotionComponent',
+  props: {
+    title: {
+      type: String,
+      required: true
+    },
+    image: {
+      type: String,
+      required: true
+    },
+    bgColor: {
+      type: String,
+      required: true
+    },
+    buttonText: {
+      type: String,
+      required: true
+    },
+    buttonColor: {
+      type: String,
+      required: true
+    }
+  }
 }
+
 </script>
 
 <style scoped>
