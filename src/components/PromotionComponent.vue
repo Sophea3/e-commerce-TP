@@ -2,11 +2,14 @@
   <div class="promo" :style="{ backgroundColor: bgColor }">
     <div class="content">
       <h2>{{ title }}</h2>
-      <ButtonComponent 
-        :text="buttonText" 
-        :color="buttonColor" 
+      <!-- Shop Now Button -->
+      <button 
+        class="shop-button"
+        :style="{ backgroundColor: buttonColor }" 
         @click="showMessage"
-      />
+      >
+        {{ buttonText }}
+      </button>
     </div>
     <div class="image-container">
       <img :src="image" alt="Promotion image" />
@@ -32,11 +35,17 @@ export default {
     },
     buttonText: {
       type: String,
-      required: true
+      default: 'Shop Now'
     },
     buttonColor: {
       type: String,
-      required: true
+      default: '#3b82f6'
+    }
+  },
+  methods: {
+    showMessage(): void {
+      // Simple handler to satisfy TypeScript; replace with real behavior (emit event, navigate, etc.) as needed
+      console.log('Promotion button clicked');
     }
   }
 }
@@ -70,6 +79,15 @@ export default {
   font-size: 20px;
   font-weight: 700;
   line-height: 1.4;
+}
+.shop-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
 .image-container {
