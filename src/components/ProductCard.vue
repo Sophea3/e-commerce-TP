@@ -95,15 +95,16 @@ const badgeColor = computed(() => {
 })
 
 const finalOldPrice = computed(() => {
-  if (props.product.oldPrice) return props.product.oldPrice
-  if (props.product.promotionAsPercentage && props.product.price) {
-    const discount = props.product.promotionAsPercentage
-    const price = props.product.price
-    const calculated = (price / (1 - discount / 100)).toFixed(2)
-    return calculated
+  // Prefer backend oldPrice if available
+  if (props.product.oldPrice !== undefined && props.product.oldPrice !== null) {
+    return props.product.oldPrice;
   }
-  return null
-})
+
+  // Always generate an old price (example: +20%)
+  const price = props.product.price;
+  return (price * 1.116).toFixed(2);
+});
+
 
 function addToCart() {
   console.log("Added to cart:", props.product.name)
