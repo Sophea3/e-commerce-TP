@@ -1,5 +1,12 @@
 <template>
   <div id="app">
+    <!-- Top Search Box -->
+    <SearchBoxComponent />
+
+    <!-- Middle Menu Bar -->
+    <MenuItemComponent />
+    <!-- 🔹 Banner Section -->
+    <BannerComponent />
     <!-- 🔹 Featured Categories Header -->
     <HeaderComponent title="Featured Categories" />
 
@@ -14,7 +21,7 @@
         :color="cat.color"
       />
     </section>
-
+    
     <!-- 🔹 Promotion Section -->
     <section class="promotions">
       <Promotion
@@ -58,9 +65,12 @@ import Category from "../components/CategoryComponent.vue"
 import Promotion from "../components/PromotionComponent.vue"
 import HeaderComponent from "../components/HeaderComponent.vue"
 import ProductCard from "../components/ProductCard.vue"
+import SearchBoxComponent from "../components/SearchBoxComponent.vue"
+import MenuItemComponent from "../components/MenuItemComponent.vue"
 
 import { onMounted } from "vue"
 import { useProductStore } from "../stores/product"
+
 
 const productStore = useProductStore()
 

@@ -114,7 +114,7 @@ function addToCart() {
 <style scoped>
 .product-card {
   width: 225px;
-  padding: 30px;
+  padding: 20px;
   border: 1px solid #10b981;
   border-radius: 14px;
   background: white;

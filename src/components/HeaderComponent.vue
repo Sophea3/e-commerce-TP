@@ -1,7 +1,7 @@
 <template>
   <header class="header">
+    
     <h1 class="logo">{{title}}</h1>
-
     <nav class="nav">
         <a href="#" class="nav-link">All</a>
         <a href="#" class="nav-link">Milk&Dairies</a>
