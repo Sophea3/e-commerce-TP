@@ -45,4 +45,13 @@ class User extends Authenticatable
             })
             ->exists();
     }
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
+    public function author(){
+        return $this->hasOne(Author::class);
+    }
+    public function authience(){
+        return $this->hasONe(Authience::class);
+    }
 }
